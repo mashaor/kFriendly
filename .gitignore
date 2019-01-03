@@ -21,3 +21,15 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
+/kFriendly.Infrastructure/bin/Debug/netstandard2.0
+/kFriendly.Entities/bin/Debug/netstandard2.0
+/kFriendly.DataAccess/bin/Debug/netstandard2.0
+/.vs
+/kFriendly.DataAccess/obj
+/kFriendly.Entities/obj
+/kFriendly.Infrastructure/obj
+/kFriendly.UI/bin
+/kFriendly.UI/obj/Debug
+/kFriendly.UI.Tests/bin/Debug
+/kFriendly.UI.Tests/obj/Debug
+/packages
