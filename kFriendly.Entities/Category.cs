@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Yelp.Api.Models
+namespace kFriendly.Entities
 {
     public class Category : IEquatable<Category>
     {

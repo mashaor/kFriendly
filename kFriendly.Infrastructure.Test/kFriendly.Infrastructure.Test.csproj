@@ -59,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\kFriendly.DataAccess\kFriendly.Core.csproj">
+      <Project>{f83caa51-0385-4103-8372-1c141109a248}</Project>
+      <Name>kFriendly.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\kFriendly.Entities\kFriendly.Entities.csproj">
       <Project>{e4be24b4-16da-48e0-8ecc-c9a2c49755f8}</Project>
       <Name>kFriendly.Entities</Name>

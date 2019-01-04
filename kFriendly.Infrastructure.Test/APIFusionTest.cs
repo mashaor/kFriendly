@@ -1,7 +1,6 @@
-﻿using System;
+﻿using kFriendly.Core.Models;
+using kFriendly.Infrastructure.YelpAPI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Yelp.Api;
-using Yelp.Api.Models;
 
 namespace kFriendly.Infrastructure.Test
 {
@@ -9,6 +8,7 @@ namespace kFriendly.Infrastructure.Test
     public class APIFusionTest
     {
 
+        
         private const string API_KEY = "";
 
         private readonly BusinessClient _client;

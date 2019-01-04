@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using kFriendly.Entities;
+using Newtonsoft.Json;
 using System;
 
-namespace Yelp.Api.Models
+namespace kFriendly.Core.Models
 {
     public class BusinessResponse : ResponseBase
     {

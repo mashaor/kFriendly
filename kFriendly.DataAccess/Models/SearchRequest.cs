@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using kFriendly.Entities;
+using Newtonsoft.Json;
 
-namespace Yelp.Api.Models
+namespace kFriendly.Core.Models
 {
     /// <summary>
     /// Container class for all parameters used by the Search API.

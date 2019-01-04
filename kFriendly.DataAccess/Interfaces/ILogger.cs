@@ -1,4 +1,4 @@
-﻿namespace Yelp.Api.Models
+﻿namespace kFriendly.Core.Interfaces
 {
     public interface ILogger
     {

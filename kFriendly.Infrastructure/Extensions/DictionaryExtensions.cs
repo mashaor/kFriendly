@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Yelp.Api
+namespace kFriendly.Infrastructure.Extentions
 {
     internal static class DictionaryExtensions
     {

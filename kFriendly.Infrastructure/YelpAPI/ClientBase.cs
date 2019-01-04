@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using kFriendly.Core.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Yelp.Api.Models;
 
-namespace Yelp.Api
+namespace kFriendly.Infrastructure.YelpAPI
 {
     /// <summary>
     /// Base class for any SDK client API implementation containing reusable logic for common call types, error handling, request retry attempts.

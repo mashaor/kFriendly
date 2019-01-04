@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Yelp.Api.Models
+namespace kFriendly.Entities
 {
     public class Hour
     {

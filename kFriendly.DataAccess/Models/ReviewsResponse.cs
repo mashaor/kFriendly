@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using kFriendly.Entities;
+using Newtonsoft.Json;
 
-namespace Yelp.Api.Models
+namespace kFriendly.Core.Models
 {
     public class ReviewsResponse : ResponseBase
     {

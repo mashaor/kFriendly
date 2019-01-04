@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Linq;
-using Newtonsoft.Json;
 
-namespace Yelp.Api.Models
+namespace kFriendly.Entities
 {
     public abstract class TrackedChangesModelBase : ModelBase
     {

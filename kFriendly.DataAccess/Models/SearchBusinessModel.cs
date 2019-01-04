@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace kFriendly.Core.Models
+﻿namespace kFriendly.Core.Models
 {
     public class SearchBusinessModel
     {

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using kFriendly.Core.Interfaces;
+using kFriendly.Core.Models;
+using kFriendly.Infrastructure.Extentions;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Yelp.Api.Models;
 
-namespace Yelp.Api
+namespace kFriendly.Infrastructure.YelpAPI
 {
     /// <summary>
     /// Client class to access Yelp Fusion v3 API.
