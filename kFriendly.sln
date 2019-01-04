@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kFriendly.Entities", "kFrie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kFriendly.Core", "kFriendly.DataAccess\kFriendly.Core.csproj", "{F83CAA51-0385-4103-8372-1C141109A248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kFriendly.Infrastructure", "kFriendly.Infrastructure\kFriendly.Infrastructure.csproj", "{953B0882-359D-48D4-989B-175CF89FC6A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kFriendly.Infrastructure", "kFriendly.Infrastructure\kFriendly.Infrastructure.csproj", "{953B0882-359D-48D4-989B-175CF89FC6A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kFriendly.Infrastructure.Test", "kFriendly.Infrastructure.Test\kFriendly.Infrastructure.Test.csproj", "{9FCE324A-D78D-45EF-BCEA-5F47E677113E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{953B0882-359D-48D4-989B-175CF89FC6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{953B0882-359D-48D4-989B-175CF89FC6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{953B0882-359D-48D4-989B-175CF89FC6A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCE324A-D78D-45EF-BCEA-5F47E677113E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCE324A-D78D-45EF-BCEA-5F47E677113E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCE324A-D78D-45EF-BCEA-5F47E677113E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCE324A-D78D-45EF-BCEA-5F47E677113E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

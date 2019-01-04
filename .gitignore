@@ -33,3 +33,5 @@ $RECYCLE.BIN/
 /kFriendly.UI.Tests/bin/Debug
 /kFriendly.UI.Tests/obj/Debug
 /packages
+/kFriendly.Infrastructure.Test/bin/Debug
+/kFriendly.Infrastructure.Test/obj/Debug
