@@ -2,6 +2,7 @@
 using kFriendly.Core.Interfaces;
 using kFriendly.Core.Models;
 using kFriendly.Entities;
+using kFriendly.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,13 @@ namespace kFriendly.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(SearchBusinessModel criteria)
+        public ActionResult Search(string term, string location)
         {
-            var allBusinesses = queryBusiness.GetBusinessByCriteria(criteria);
+            SearchRequest searchCriteria = new SearchRequest();
+            searchCriteria.Term = term;
+            searchCriteria.Location = location;
+
+            BusinessSearchResponse allBusinesses = queryBusiness.GetBusinessByCriteria(searchCriteria);
             return View("BusinessSearchResults", allBusinesses);
         }
 

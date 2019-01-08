@@ -35,3 +35,4 @@ $RECYCLE.BIN/
 /packages
 /kFriendly.Infrastructure.Test/bin/Debug
 /kFriendly.Infrastructure.Test/obj/Debug
+/kFriendly.Infrastructure/Credentials.cs

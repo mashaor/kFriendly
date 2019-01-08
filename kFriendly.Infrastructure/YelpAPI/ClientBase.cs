@@ -19,9 +19,9 @@ namespace kFriendly.Infrastructure.YelpAPI
         private const string API_HOST = "https://api.yelp.com";
         private const string API_VERSION = "/v3";
 
-        private ILogger _logger;
+        private IHTTPLogger _logger;
 
-        public ClientBase(string apiKey, ILogger logger = null)
+        public ClientBase(string apiKey, IHTTPLogger logger = null)
         {
              ApiKey = apiKey;
             _logger = logger;
@@ -51,7 +51,7 @@ namespace kFriendly.Infrastructure.YelpAPI
                 throw new ArgumentNullException(nameof(url));
 
             var response = await this.Client.GetAsync(BuildUri(url), ct);
-            this.Log(response);
+            _logger.Log(response);
             var data = await response.Content.ReadAsStringAsync();
 
             var settings = new JsonSerializerSettings
@@ -64,7 +64,7 @@ namespace kFriendly.Infrastructure.YelpAPI
             return jsonModel;
         }
 
-        
+
         /// <summary>
         /// Posts data to the specified URL.
         /// </summary>
@@ -111,15 +111,15 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// <param name="ct">Cancellation token.</param>
         /// <param name="serializerType">Specifies how the data should be deserialized.</param>
         /// <returns>Response contents as string else null if nothing.</returns>
-        //protected async Task<HttpResponseMessage> PostAsync(string url, HttpContent contents, CancellationToken ct)
-        //{
-        //    if (string.IsNullOrEmpty(url))
-        //        throw new ArgumentNullException(nameof(url));
+        protected async Task<HttpResponseMessage> PostAsync(string url, HttpContent contents, CancellationToken ct)
+        {
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException(nameof(url));
 
-        //    var response = await this.Client.PostAsync(BuildUri(url), contents, ct);
-        //    this.Log(response);
-        //    return response;
-        //}
+            var response = await this.Client.PostAsync(BuildUri(url), contents, ct);
+            _logger.Log(response);
+            return response;
+        }
 
 
         /// <summary>
@@ -144,85 +144,5 @@ namespace kFriendly.Infrastructure.YelpAPI
         {
             return new Uri(API_HOST + API_VERSION + url);
         }
-
-        #region Logging
-
-        private void Log(string message)
-        {
-            if (_logger != null)
-                _logger.Log(message);
-            else
-                System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        /// <summary>
-        /// Logs HttpRequest information to the application logger.
-        /// </summary>
-        /// <param name="request">Request to log.</param>
-        private void Log(HttpRequestMessage request)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            try
-            {
-                var message = string.Format(
-                    Environment.NewLine + "---------------------------------" + Environment.NewLine +
-                    "WEB REQUEST to {0}" + Environment.NewLine +
-                    "-Method: {1}" + Environment.NewLine +
-                    "-Headers: {2}" + Environment.NewLine +
-                    "-Contents: " + Environment.NewLine + "{3}" + Environment.NewLine +
-                    "---------------------------------",
-                    request.RequestUri.OriginalString,
-                    request.Method.Method,
-                    request.Headers?.ToString(),
-                    request.Content?.ReadAsStringAsync().Result
-                );
-                this.Log(message);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error during Log(HttpRequestMessage request): " + ex.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Logs the HttpResponse object to the application logger.
-        /// </summary>
-        /// <param name="response">Response to log.</param>
-        private void Log(HttpResponseMessage response)
-        {
-            if (response == null)
-                throw new ArgumentNullException(nameof(response));
-
-            this.Log(response.RequestMessage);
-
-            try
-            {
-                var message = string.Format(
-                    Environment.NewLine + "---------------------------------" + Environment.NewLine +
-                    "WEB RESPONSE to {0}" + Environment.NewLine +
-                    "-HttpStatus: {1}" + Environment.NewLine +
-                    "-Reason Phrase: {2}" + Environment.NewLine +
-                    "-ContentLength: {3:0.00 KB}" + Environment.NewLine +
-                    "-Contents: " + Environment.NewLine + "{4}" + Environment.NewLine +
-                    "---------------------------------",
-                    response.RequestMessage.RequestUri.OriginalString,
-                    string.Format("{0} {1}", (int)response.StatusCode, response.StatusCode.ToString()),
-                    response.ReasonPhrase,
-                    Convert.ToDecimal(Convert.ToDouble(response.Content.Headers.ContentLength) / 1024),
-                    response.Content?.ReadAsStringAsync().Result
-                    );
-                this.Log(message);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error during Log(HttpResponseMessage request): " + ex.ToString());
-            }
-        }
-
-        #endregion
-
-
     }
 }

@@ -7,15 +7,11 @@ namespace kFriendly.Infrastructure.Test
     [TestClass]
     public class APIFusionTest
     {
-
-        
-        private const string API_KEY = "";
-
         private readonly BusinessClient _client;
 
         public APIFusionTest()
         {
-            _client = new BusinessClient(API_KEY);
+            _client = new BusinessClient(Credentials.API_KEY);
         }
 
         [TestMethod]

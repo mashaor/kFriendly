@@ -12,7 +12,7 @@ namespace kFriendly.Core.Models
     public abstract class BusinessResponseBase : ResponseBase
     {
         [JsonProperty("businesses")]
-        public BusinessResponse[] Businesses { get; set; }
+        public BusinessDetailsResponse[] Businesses { get; set; }
     }
 
     public sealed class ResponseError

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\JasonQueryBusiness.cs" />
     <Compile Remove="JasonDataLoader.cs" />
     <Compile Remove="YelpAPI\APICall.cs" />
   </ItemGroup>

@@ -1,24 +1,44 @@
 ﻿using kFriendly.Core.Interfaces;
 using kFriendly.Core.Models;
-using kFriendly.Entities;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using kFriendly.Infrastructure.Logging;
+using kFriendly.Infrastructure.YelpAPI;
 
 namespace kFriendly.Infrastructure.Data
 {
-    class ApiQueryBusiness : IQueryBusiness
+    public class ApiQueryBusiness : IQueryBusiness
     {
-        public List<YelpBusiness> GetBusinessByCriteria(SearchBusinessModel searchCriteria)
+        private ILogger _logger;
+
+        private readonly BusinessClient _client;
+
+        public ApiQueryBusiness()
         {
-            throw new NotImplementedException();
+            _client = new BusinessClient(Credentials.API_KEY);
+            _logger = new DebugLogger();
         }
 
-        public YelpBusiness GetBusinessById(string businessId)
+        public BusinessSearchResponse GetBusinessByCriteria(SearchRequest searchCriteria)
         {
-            throw new NotImplementedException();
+            var response = _client.SearchBusinessesAllAsync(searchCriteria).Result;
+
+            if (response?.Error != null)
+            {
+                _logger?.Log($"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");
+                
+            }
+            return response;
+        }
+
+        public BusinessDetailsResponse GetBusinessById(string businessId)
+        {
+            var response = _client.GetBusinessAsync(businessId).Result;
+
+            if (response?.Error != null)
+            {
+                _logger?.Log($"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");
+
+            }
+            return response;
         }
     }
 }

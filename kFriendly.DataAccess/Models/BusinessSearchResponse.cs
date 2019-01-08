@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace kFriendly.Core.Models
 {
-    public class SearchResponse : BusinessResponseBase
+    public class BusinessSearchResponse : BusinessResponseBase
     {
         [JsonProperty("region")]
         public Region Region { get; set; }

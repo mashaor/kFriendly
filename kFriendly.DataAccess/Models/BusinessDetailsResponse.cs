@@ -4,7 +4,7 @@ using System;
 
 namespace kFriendly.Core.Models
 {
-    public class BusinessResponse : ResponseBase
+    public class BusinessDetailsResponse : ResponseBase
     {
      
         [JsonProperty("categories")]

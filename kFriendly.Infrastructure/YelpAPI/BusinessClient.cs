@@ -24,7 +24,7 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// </summary>
         /// <param name="apiKey">App secret from yelp's developer registration page.</param>
         /// <param name="logger">Optional class instance which applies the ILogger interface to support custom logging within the client.</param>
-        public BusinessClient(string apiKey, ILogger logger = null) 
+        public BusinessClient(string apiKey, IHTTPLogger logger = null) 
             : base(apiKey, logger)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
@@ -55,7 +55,7 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// <param name="longitude">User's current longitude.</param>
         /// <param name="ct">Cancellation token instance. Use CancellationToken.None if not needed.</param>
         /// <returns>SearchResponse with businesses matching the specified parameters.</returns>
-        public async Task<SearchResponse> SearchBusinessesWithDeliveryAsync(string term, double latitude, double longitude, CancellationToken ct = default(CancellationToken))
+        public async Task<BusinessSearchResponse> SearchBusinessesWithDeliveryAsync(string term, double latitude, double longitude, CancellationToken ct = default(CancellationToken))
         {
             SearchRequest search = new SearchRequest();
 
@@ -63,7 +63,7 @@ namespace kFriendly.Infrastructure.YelpAPI
             search.Latitude=latitude;
             search.Longitude=longitude;
 
-            var response = await SearchBusinesses<SearchResponse>(DELIVERY_SEARCH_PATH, search, ct);
+            var response = await SearchBusinesses<BusinessSearchResponse>(DELIVERY_SEARCH_PATH, search, ct);
 
             return response;
         }
@@ -100,7 +100,7 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// <param name="longitude">User's current longitude.</param>
         /// <param name="ct">Cancellation token instance. Use CancellationToken.None if not needed.</param>
         /// <returns>SearchResponse with businesses matching the specified parameters.</returns>
-        public Task<SearchResponse> SearchBusinessesAllAsync(string term, double latitude, double longitude, CancellationToken ct = default(CancellationToken))
+        public Task<BusinessSearchResponse> SearchBusinessesAllAsync(string term, double latitude, double longitude, CancellationToken ct = default(CancellationToken))
         {
             SearchRequest search = new SearchRequest();
             if (!string.IsNullOrEmpty(term))
@@ -116,12 +116,12 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// <param name="search">Container object for all search parameters.</param>
         /// <param name="ct">Cancellation token instance. Use CancellationToken.None if not needed.</param>
         /// <returns>SearchResponse with businesses matching the specified parameters.</returns>
-        public async Task<SearchResponse> SearchBusinessesAllAsync(SearchRequest search, CancellationToken ct = default(CancellationToken))
+        public async Task<BusinessSearchResponse> SearchBusinessesAllAsync(SearchRequest search, CancellationToken ct = default(CancellationToken))
         {
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
 
-            var response = await SearchBusinesses<SearchResponse>(BUSINESS_SEARCH_PATH, search, ct);
+            var response = await SearchBusinesses<BusinessSearchResponse>(BUSINESS_SEARCH_PATH, search, ct);
           
             return response;
         }
@@ -134,10 +134,10 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// <param name="businessID">ID value of the Yelp business.</param>
         /// <param name="ct">Cancellation token instance. Use CancellationToken.None if not needed.</param>
         /// <returns>BusinessResponse instance with details of the specified business if found.</returns>
-        public async Task<BusinessResponse> GetBusinessAsync(string businessID, CancellationToken ct = default(CancellationToken))
+        public async Task<BusinessDetailsResponse> GetBusinessAsync(string businessID, CancellationToken ct = default(CancellationToken))
         {
             this.ApplyAuthenticationHeaders(ct);            
-            return await this.GetAsync<BusinessResponse>(BUSINESS_PATH + Uri.EscapeUriString(businessID), ct);
+            return await this.GetAsync<BusinessDetailsResponse>(BUSINESS_PATH + Uri.EscapeUriString(businessID), ct);
         }
 
         /// <summary>
