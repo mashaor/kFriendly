@@ -81,62 +81,49 @@
             </div>
         </div>*@
 
-    @*<form>
-            <div class="form-row align-items-center">
-                <div class="col-auto">
-                    <label class="sr-only" for="inlineFormInput">Name</label>
-                    <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Jane Doe">
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">bla</div>
-                        </div>
-                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
-                    </div>
-                </div>
-            </div>
-        </form>*@
 
-    <div class="y-container homepage-hero" style="background-image: url(https://s3-media1.fl.yelpcdn.com/assets/srv0/yelp_large_assets/8a6cc705477a/assets/img/home/hero_photos/uteUmycsbh0UibXk-At-3A.jpg)">
-        <div class="homepage-hero_inner">
-            <div class="form-row align-items-center">
-
-                <div class="col-sm-4">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Find</span>
+    <div class="homepage-hero" style="background-image: url(https://s3-media1.fl.yelpcdn.com/assets/srv0/yelp_large_assets/8a6cc705477a/assets/img/home/hero_photos/uteUmycsbh0UibXk-At-3A.jpg)">
+        @*<div class="y-container_content">*@         
+                    <div class="form-row h-100 justify-content-center align-items-center ">
+                        <div class="col-sm-4">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Find</span>
+                                    </div>
+                                    @Html.EditorFor(model => model.Term, new { htmlAttributes = new { @class = "form-control", @placeholder = "pizza, lunch, coffee" } })
+                                </div>
                             </div>
-                            @Html.EditorFor(model => model.Term, new { htmlAttributes = new { @class = "form-control", @placeholder = "pizza, lunch, coffee" } })
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-sm-4">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Near</span>
+                        <div class="col-sm-4">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Near</span>
+                                    </div>
+                                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                                </div>
                             </div>
-                            @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Search" class="btn btn-info my-2 my-sm-0" />
+                        <div class="col-sm-2">
+
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <button type="submit" class="btn btn-info">
+                                        <span class="oi oi-magnifying-glass"></span> Search
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+             
             </div>
-        </div>
-    </div>
+        @*</div>*@
+   
 }
 
 <script>

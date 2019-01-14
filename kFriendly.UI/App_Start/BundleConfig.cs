@@ -23,9 +23,11 @@ namespace kFriendly.UI
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/yelpSite.css",
-                      "~/Content/site.css"
+                "~/Content/yelpSite.css",
+                "~/Content/bootstrap.css",
+                      
+                     // "~/Content/site.css",
+                      "~/Images/open-iconic-master/font/css/open-iconic-bootstrap.min.css"
                       ));
         }
     }
