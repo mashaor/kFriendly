@@ -9,7 +9,8 @@ namespace kFriendly.UI
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -27,7 +28,8 @@ namespace kFriendly.UI
                 "~/Content/bootstrap.css",
                       
                      // "~/Content/site.css",
-                      "~/Images/open-iconic-master/font/css/open-iconic-bootstrap.min.css"
+                      "~/Images/open-iconic-master/font/css/open-iconic-bootstrap.min.css",
+                      "~/Content/themes/base/jquery-ui.css"
                       ));
         }
     }

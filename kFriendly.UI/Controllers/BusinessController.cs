@@ -36,6 +36,17 @@ namespace kFriendly.UI.Controllers
             return View("BusinessSearchResults", allBusinesses);
         }
 
+        [HttpPost]
+        public ActionResult Autocomplete(string term,string latitude, string longitude)
+        {
+            var items = new[] { "Apple", "Pear", "Banana", "Pineapple", "Peach" };
+
+            var filteredItems = items.Where(
+                item => item.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+                );
+            return Json(filteredItems, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult BusinessDetails(YelpBusiness business)
         {
            // var allBusinesses = queryBusiness.GetBusinessByCriteria(criteria);

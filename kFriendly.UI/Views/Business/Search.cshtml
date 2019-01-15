@@ -127,8 +127,54 @@
 }
 
 <script>
+    var latitude = '';
+    var longitude = '';
+
     navigator.geolocation.getCurrentPosition(function (loc) {
-        loc.coords.latitude;
-        loc.coords.longitude;
+        latitude = loc.coords.latitude;
+        longitude = loc.coords.longitude;
+        alert(latitude + '   ' + longitude)
+    })
+</script>
+
+<script type="text/javascript" language="javascript">
+
+    var latitude = '';
+    var longitude = '';
+
+    $(document).ready(function () {
+
+        navigator.geolocation.getCurrentPosition(function (loc) {
+            latitude = loc.coords.latitude;
+            longitude = loc.coords.longitude;
+        })
+
+        $('#Term').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    dataType: "json",
+                    type: 'POST',
+                    url: '@Url.Action("Autocomplete")',
+                    data: {
+                        term: request.term,
+                        latitude: latitude,
+                        longitude: longitude
+                    },  
+                    success: function (data) {
+                        //$('Term').removeClass('ui-autocomplete-loading');
+                        // hide loading image
+
+                        //response($.map(data, function (item) {
+                        //    // your operation on data
+                        //}));
+                        response(data);
+                    },
+                    error: function (data) {
+                        //$('Term').removeClass('ui-autocomplete-loading');
+                    }
+                });
+            },
+            
+    });
     })
 </script>
