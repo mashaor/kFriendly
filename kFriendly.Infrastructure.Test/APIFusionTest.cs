@@ -1,4 +1,5 @@
 ﻿using kFriendly.Core.Models;
+using kFriendly.Infrastructure.Logging;
 using kFriendly.Infrastructure.YelpAPI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,13 +12,13 @@ namespace kFriendly.Infrastructure.Test
 
         public APIFusionTest()
         {
-            _client = new BusinessClient(Credentials.API_KEY);
+            _client = new BusinessClient(Credentials.API_KEY, new DebugLogger());
         }
 
         [TestMethod]
         public void TestSearch()
         {
-            var response = _client.SearchBusinessesAllAsync("mexican", 33.730140, -118.000145).Result;
+            var response = _client.SearchBusinessesAllAsync("mexican", 33.730140, -118.0010307).Result;
 
             Assert.AreNotSame(null, response);
             Assert.AreSame(null, response?.Error, $"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");
@@ -35,7 +36,13 @@ namespace kFriendly.Infrastructure.Test
         [TestMethod]
         public void TestAutocomplete()
         {
-            var response = _client.AutocompleteAsync("cakes", 33.730140, -118.000145).Result;
+            SearchRequest searchCriteria = new SearchRequest();
+            searchCriteria.Latitude = double.Parse("33.732556599999995");//"33.730140");
+            searchCriteria.Longitude = double.Parse("-118.0010307");// " - 118.000145");
+            searchCriteria.Text = "pi";
+
+            //var response = _client.AutocompleteAsync("cakes", 33.730140, -118.000145).Result;
+            var response = _client.AutocompleteAsync(searchCriteria).Result;
 
             Assert.IsTrue(response.Categories.Length > 0);
             Assert.AreNotSame(null, response);

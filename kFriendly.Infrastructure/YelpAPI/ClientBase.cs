@@ -51,7 +51,7 @@ namespace kFriendly.Infrastructure.YelpAPI
                 throw new ArgumentNullException(nameof(url));
 
             var response = await this.Client.GetAsync(BuildUri(url), ct);
-            _logger.Log(response);
+            _logger?.Log(response);
             var data = await response.Content.ReadAsStringAsync();
 
             var settings = new JsonSerializerSettings
@@ -117,7 +117,7 @@ namespace kFriendly.Infrastructure.YelpAPI
                 throw new ArgumentNullException(nameof(url));
 
             var response = await this.Client.PostAsync(BuildUri(url), contents, ct);
-            _logger.Log(response);
+            _logger?.Log(response);
             return response;
         }
 

@@ -78,15 +78,8 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// <param name="locale">Language/locale value from https://www.yelp.com/developers/documentation/v3/supported_locales </param>
         /// <param name="ct">Cancellation token instance. Use CancellationToken.None if not needed.</param>
         /// <returns>AutocompleteResponse with businesses/categories/terms matching the specified parameters.</returns>
-        public async Task<AutocompleteResponse> AutocompleteAsync(string text, double latitude, double longitude, string locale = null, CancellationToken ct = default(CancellationToken))
-        {
-            SearchRequest search = new SearchRequest();
-
-            search.Text = text;
-            search.Latitude = latitude;
-            search.Longitude = longitude;
-            search.Locale = locale;
-
+        public async Task<AutocompleteResponse> AutocompleteAsync(SearchRequest search, CancellationToken ct = default(CancellationToken))
+        { 
             var response = await SearchBusinesses<AutocompleteResponse>(AUTOCOMPLETE_PATH, search, ct);
 
             return response;

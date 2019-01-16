@@ -2,24 +2,27 @@
 using kFriendly.Core.Models;
 using kFriendly.Infrastructure.Logging;
 using kFriendly.Infrastructure.YelpAPI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace kFriendly.Infrastructure.Data
 {
     public class ApiQueryBusiness : IQueryBusiness
     {
-        private ILogger _logger;
+        private IHTTPLogger _logger;
 
         private readonly BusinessClient _client;
 
         public ApiQueryBusiness()
         {
-            _client = new BusinessClient(Credentials.API_KEY);
             _logger = new DebugLogger();
+            _client = new BusinessClient(Credentials.API_KEY, _logger);   
         }
 
-        public BusinessSearchResponse GetBusinessByCriteria(SearchRequest searchCriteria)
+        public async Task<BusinessSearchResponse> GetBusinessByCriteria(SearchRequest searchCriteria)
         {
-            var response = _client.SearchBusinessesAllAsync(searchCriteria).Result;
+            var response = await _client.SearchBusinessesAllAsync(searchCriteria);
 
             if (response?.Error != null)
             {
@@ -39,6 +42,31 @@ namespace kFriendly.Infrastructure.Data
 
             }
             return response;
+        }
+
+        public async Task<List<string>> Autocomplete(SearchRequest searchCriteria)
+        {
+            List<string> suggestions = new List<string>();
+
+            try
+            {
+                var response = await _client.AutocompleteAsync(searchCriteria);
+
+                if (response?.Error != null)
+                {
+                    _logger?.Log($"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");
+                }
+
+                suggestions.AddRange(response.Terms.Select(t => t.Text));
+                suggestions.AddRange(response.Categories.Select(c => c.Title));
+                suggestions.AddRange(response.Businesses.Select(b => b.Name));
+            }
+            catch(System.Exception e)
+            {
+                _logger?.Log(e.ToString());
+            }
+
+            return suggestions;
         }
     }
 }

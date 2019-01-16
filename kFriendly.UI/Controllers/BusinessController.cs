@@ -1,12 +1,15 @@
-﻿using kFriendly.Core;
-using kFriendly.Core.Interfaces;
+﻿using kFriendly.Core.Interfaces;
 using kFriendly.Core.Models;
 using kFriendly.Entities;
+using kFriendly.Infrastructure;
 using kFriendly.UI.Models;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace kFriendly.UI.Controllers
@@ -26,30 +29,52 @@ namespace kFriendly.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(string term, string location)
+        public async Task<ActionResult> Search(string term, string location)
         {
             SearchRequest searchCriteria = new SearchRequest();
             searchCriteria.Term = term;
             searchCriteria.Location = location;
 
-            BusinessSearchResponse allBusinesses = queryBusiness.GetBusinessByCriteria(searchCriteria);
+            BusinessSearchResponse allBusinesses = await queryBusiness.GetBusinessByCriteria(searchCriteria);
+
             return View("BusinessSearchResults", allBusinesses);
         }
 
-        [HttpPost]
-        public ActionResult Autocomplete(string term,string latitude, string longitude)
-        {
-            var items = new[] { "Apple", "Pear", "Banana", "Pineapple", "Peach" };
 
-            var filteredItems = items.Where(
-                item => item.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-                );
-            return Json(filteredItems, JsonRequestBehavior.AllowGet);
+        private async Task<BusinessSearchResponse> SearchBla()
+        {
+            using (HttpClient Client = new HttpClient())
+            {
+
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.API_KEY);
+                var response = await Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
+                var response2 =  Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
+                var data = await response.Content.ReadAsStringAsync();
+
+                var jsonModel = JsonConvert.DeserializeObject<BusinessSearchResponse>(data);
+
+                return jsonModel;
+                
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Autocomplete(string term, string latitude, string longitude)
+        {
+            SearchRequest searchCriteria = new SearchRequest();
+            searchCriteria.Latitude = double.Parse(latitude);
+            searchCriteria.Longitude = double.Parse(longitude);
+            searchCriteria.Text = term;
+            // searchCriteria.Locale = locale;
+
+            List<string> suggestions = await queryBusiness.Autocomplete(searchCriteria);
+            
+            return Json(suggestions, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult BusinessDetails(YelpBusiness business)
         {
-           // var allBusinesses = queryBusiness.GetBusinessByCriteria(criteria);
+            // var allBusinesses = queryBusiness.GetBusinessByCriteria(criteria);
 
             return View(business);
         }
