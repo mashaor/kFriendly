@@ -17,7 +17,7 @@ namespace kFriendly.Infrastructure.Data
         public ApiQueryBusiness()
         {
             _logger = new DebugLogger();
-            _client = new BusinessClient(Credentials.API_KEY, _logger);   
+            _client = new BusinessClient(_logger);   
         }
 
         public async Task<BusinessSearchResponse> GetBusinessByCriteria(SearchRequest searchCriteria)

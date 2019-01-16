@@ -6,24 +6,26 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace kFriendly.Infrastructure.YelpAPI
+namespace kFriendly.Infrastructure
 {
     /// <summary>
     /// Base class for any SDK client API implementation containing reusable logic for common call types, error handling, request retry attempts.
     /// </summary>
     public abstract class ClientBase //: IDisposable
     {
-        private string ApiKey { get;  set; }
-        protected HttpClient Client = new HttpClient();
+        private string ApiKey { get; set; }
+        private string ApiHost { get; set; }
+        private string ApiVersion { get; set; }
 
-        private const string API_HOST = "https://api.yelp.com";
-        private const string API_VERSION = "/v3";
+        protected HttpClient Client = new HttpClient();
 
         private IHTTPLogger _logger;
 
-        public ClientBase(string apiKey, IHTTPLogger logger = null)
+        public ClientBase(string apiHost, string apiVersion, string apiKey = null, IHTTPLogger logger = null)
         {
-             ApiKey = apiKey;
+            ApiHost = apiHost;
+            ApiVersion = apiVersion;
+            ApiKey = apiKey;
             _logger = logger;
         }
 
@@ -59,6 +61,7 @@ namespace kFriendly.Infrastructure.YelpAPI
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             };
+
             var jsonModel = JsonConvert.DeserializeObject<T>(data, settings);
 
             return jsonModel;
@@ -142,7 +145,7 @@ namespace kFriendly.Infrastructure.YelpAPI
 
         private Uri BuildUri(string url)
         {
-            return new Uri(API_HOST + API_VERSION + url);
+            return new Uri(ApiHost + ApiVersion + url);
         }
     }
 }

@@ -13,7 +13,9 @@ namespace kFriendly.Infrastructure.YelpAPI
     /// </summary>
     public sealed class BusinessClient : ClientBase
     {
-        
+        private const string API_HOST = "https://api.yelp.com";
+        private const string API_VERSION = "/v3";
+
         private const string BUSINESS_SEARCH_PATH = "/businesses/search";
         private const string BUSINESS_PATH = "/businesses/";
         private const string AUTOCOMPLETE_PATH = "/autocomplete";
@@ -24,11 +26,11 @@ namespace kFriendly.Infrastructure.YelpAPI
         /// </summary>
         /// <param name="apiKey">App secret from yelp's developer registration page.</param>
         /// <param name="logger">Optional class instance which applies the ILogger interface to support custom logging within the client.</param>
-        public BusinessClient(string apiKey, IHTTPLogger logger = null) 
-            : base(apiKey, logger)
+        public BusinessClient(IHTTPLogger logger = null) 
+            : base(API_HOST, API_VERSION, Credentials.API_KEY_YELP, logger)
         {
-            if (string.IsNullOrWhiteSpace(apiKey))
-                throw new ArgumentNullException(nameof(apiKey));
+            if (string.IsNullOrWhiteSpace(API_HOST))
+                throw new ArgumentNullException(nameof(API_HOST));
         }
 
         private async Task<T> SearchBusinesses<T>(string url, SearchRequest search, CancellationToken ct = default(CancellationToken)) where T : BusinessResponseBase

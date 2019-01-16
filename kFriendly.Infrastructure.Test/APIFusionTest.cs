@@ -12,7 +12,7 @@ namespace kFriendly.Infrastructure.Test
 
         public APIFusionTest()
         {
-            _client = new BusinessClient(Credentials.API_KEY, new DebugLogger());
+            _client = new BusinessClient(new DebugLogger());
         }
 
         [TestMethod]

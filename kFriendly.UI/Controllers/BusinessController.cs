@@ -46,7 +46,7 @@ namespace kFriendly.UI.Controllers
             using (HttpClient Client = new HttpClient())
             {
 
-                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.API_KEY);
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.API_KEY_YELP);
                 var response = await Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
                 var response2 =  Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
                 var data = await response.Content.ReadAsStringAsync();
