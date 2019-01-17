@@ -50,6 +50,21 @@ namespace kFriendly.Infrastructure.Test
         }
 
         [TestMethod]
+        public void TestAutocompletePlaces()
+        {
+            SearchRequest searchCriteria = new SearchRequest();
+            searchCriteria.Latitude = double.Parse("33.732556599999995");//"33.730140");
+            searchCriteria.Longitude = double.Parse("-118.0010307");// " - 118.000145");
+            searchCriteria.Text = "mal";
+
+            var response = _client.AutocompleteAsync(searchCriteria).Result;
+
+            Assert.IsTrue(response.Categories.Length > 0);
+            Assert.AreNotSame(null, response);
+            Assert.AreSame(null, response?.Error, $"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");
+        }
+
+        [TestMethod]
         public void TestGetBusiness()
         {
             var response = _client.GetBusinessAsync("north-india-restaurant-san-francisco").Result;

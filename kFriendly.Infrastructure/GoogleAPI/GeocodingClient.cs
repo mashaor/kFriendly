@@ -19,15 +19,13 @@ namespace kFriendly.Infrastructure.GoogleAPI
                 throw new ArgumentNullException(nameof(API_HOST));
         }
 
-        public async Task<ReverseGeocodingResponse> ReverseGeocoding(double latitude, double longitude, CancellationToken ct = default(CancellationToken))
+        public async Task<ReverseGeocodingResponse> ReverseGeocoding(ReverseGeocodingRequest request, CancellationToken ct = default(CancellationToken))
         {
-            this.ValidateCoordinates(latitude, longitude);
+            this.ValidateCoordinates(request.Latitude, request.Longitude);
+            request.SetLatLng();
 
-            Dictionary<string, object> search = new Dictionary<string, object>();
-            search.Add("latlng", string.Format("{0},{1}",latitude, longitude));//latlng=40.714224,-73.961452
-            search.Add("key", Credentials.API_KEY_GOOGLE);
+            var querystring = request.GetChangedProperties().ToQueryString();
 
-            var querystring = search.ToQueryString();
             var response = await this.GetAsync<ReverseGeocodingResponse>(querystring, ct);
 
             return response;

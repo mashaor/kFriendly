@@ -1,4 +1,5 @@
-﻿using kFriendly.Infrastructure.GoogleAPI;
+﻿using kFriendly.Core.Models;
+using kFriendly.Infrastructure.GoogleAPI;
 using kFriendly.Infrastructure.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -18,9 +19,12 @@ namespace kFriendly.Infrastructure.Test
         [TestMethod]
         public void TestSearch()
         {
-            var response = _client.ReverseGeocoding(40.714224, -73.961452).Result;
+            ReverseGeocodingRequest request = new ReverseGeocodingRequest(Credentials.API_KEY_GOOGLE, 
+                                                                          40.714224,
+                                                                          -73.961452,
+                                                                          "administrative_area_level_2" );
 
-            //var bla = response.results.Where(r => r.types.Contains("administrative_area_level_2")).ToList();
+            var response = _client.ReverseGeocoding(request).Result;
 
             Assert.AreNotSame(null, response);
             Assert.AreSame(null, response?.Error, $"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");

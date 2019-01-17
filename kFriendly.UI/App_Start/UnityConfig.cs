@@ -18,6 +18,7 @@ namespace kFriendly.UI
             // e.g. container.RegisterType<ITestService, TestService>();
             
             container.RegisterType<IQueryBusiness, ApiQueryBusiness>();
+            container.RegisterType<IQueryGeocode, APIQueryGeocode>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
