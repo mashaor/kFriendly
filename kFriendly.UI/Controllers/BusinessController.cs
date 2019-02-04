@@ -24,7 +24,7 @@ namespace kFriendly.UI.Controllers
             this.queryGeocode = queryGeocode;
         }
 
-
+       // [HttpGet("Search")]
         public ActionResult Search()
         {
             return View(new SearchBusinessModel());
@@ -33,32 +33,31 @@ namespace kFriendly.UI.Controllers
         [HttpPost]
         public async Task<ActionResult> Search(string term, string location)
         {
-            SearchRequest searchCriteria = new SearchRequest();
-            searchCriteria.Term = term;
-            searchCriteria.Location = location;
+            //ModelState.IsValid;
+            //ModelState.Clear();
+            KFBusinessModel allBusinesses = await queryBusiness.GetBusinessByCriteria(term, location);
 
-            BusinessSearchResponse allBusinesses = await queryBusiness.GetBusinessByCriteria(searchCriteria);
-
+           
             return View("BusinessSearchResults", allBusinesses);
         }
 
 
-        private async Task<BusinessSearchResponse> SearchBla()
-        {
-            using (HttpClient Client = new HttpClient())
-            {
+        //private async Task<BusinessSearchResponse> SearchBla()
+        //{
+        //    using (HttpClient Client = new HttpClient())
+        //    {
 
-                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.API_KEY_YELP);
-                var response = await Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
-                var response2 = Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
-                var data = await response.Content.ReadAsStringAsync();
+        //        Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.API_KEY_YELP);
+        //        var response = await Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
+        //        var response2 = Client.GetAsync(@"https://api.yelp.com/v3/autocomplete?latitude=33.7325566&longitude=-118.0010307&text=piz", new CancellationToken());
+        //        var data = await response.Content.ReadAsStringAsync();
 
-                var jsonModel = JsonConvert.DeserializeObject<BusinessSearchResponse>(data);
+        //        var jsonModel = JsonConvert.DeserializeObject<BusinessSearchResponse>(data);
 
-                return jsonModel;
+        //        return jsonModel;
 
-            }
-        }
+        //    }
+        //}
 
         [HttpPost]
         public async Task<ActionResult> Autocomplete(string term, string latitude, string longitude)
@@ -95,6 +94,8 @@ namespace kFriendly.UI.Controllers
         [HttpPost]
         public async Task<ActionResult> GetLocationFriendlyName(string latitude, string longitude)
         {
+            
+
             string location = string.Empty;
 
             double parsedLatitude;
