@@ -6,7 +6,7 @@ namespace kFriendly.Core.Interfaces
 {
     public interface IQueryBusiness
     {
-        Task<BusinessSearchResponse> GetBusinessByCriteria(SearchRequest searchCriteria);
+        Task<KFBusinessModel> GetBusinessByCriteria(string term, string location);
         BusinessDetailsResponse GetBusinessById(string businessId);
         Task<List<string>> Autocomplete(SearchRequest searchCriteria);
     }

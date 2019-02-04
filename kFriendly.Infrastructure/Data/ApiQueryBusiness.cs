@@ -17,18 +17,35 @@ namespace kFriendly.Infrastructure.Data
         public ApiQueryBusiness()
         {
             _logger = new DebugLogger();
-            _client = new BusinessClient(_logger);   
+            _client = new BusinessClient(_logger);
         }
 
-        public async Task<BusinessSearchResponse> GetBusinessByCriteria(SearchRequest searchCriteria)
+        public async Task<KFBusinessModel> GetBusinessByCriteria(string term, string location)
         {
-            var response = await _client.SearchBusinessesAllAsync(searchCriteria);
-
-            if (response?.Error != null)
+            KFBusinessModel response = new KFBusinessModel();
+            try
             {
-                _logger?.Log($"Response error returned {response?.Error?.Code} - {response?.Error?.Description}");
-                
+                SearchRequest searchCriteria = new SearchRequest();
+                searchCriteria.Term = term;
+                searchCriteria.Location = location;
+
+                BusinessSearchResponse yelpResponse = await _client.SearchBusinessesAllAsync(searchCriteria);
+
+                if (yelpResponse?.Error != null)
+                {
+                    _logger?.Log($"Response error returned {yelpResponse?.Error?.Code} - {yelpResponse?.Error?.Description}");
+                }
+                else
+                {
+                    //response.
+                    //todo: map yelpResponse  to response
+                }
             }
+            catch (System.Exception e)
+            {
+                _logger?.Log(e.ToString());
+            }
+
             return response;
         }
 
@@ -61,7 +78,7 @@ namespace kFriendly.Infrastructure.Data
                 suggestions.AddRange(response.Categories.Select(c => c.Title));
                 suggestions.AddRange(response.Businesses.Select(b => b.Name));
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 _logger?.Log(e.ToString());
             }
